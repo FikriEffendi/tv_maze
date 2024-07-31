@@ -10,12 +10,13 @@
           >
             menu
           </span>
-          <div
+          <router-link
+            :to="{ name: 'home' }"
             class="text-lg transition-all hover:text-amber-800"
             :class="{ 'sm:hidden': isShow.bool }"
           >
             Logo
-          </div>
+          </router-link>
         </div>
         <div class="">
           <input-search />

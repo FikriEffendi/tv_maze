@@ -1,7 +1,11 @@
 <template>
-  <div></div>
+  <div>
+    <section-show />
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import sectionShow from "./section-show.vue";
+</script>
 
 <style></style>
