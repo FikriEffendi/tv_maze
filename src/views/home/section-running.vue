@@ -21,7 +21,9 @@
 
         <swiper-slide>
           <div class="flex items-center justify-center h-full">
-            <span class="material-symbols-outlined"> arrow_forward_ios </span>
+            <span class="cursor-pointer material-symbols-outlined">
+              arrow_forward_ios
+            </span>
           </div>
         </swiper-slide>
       </swiper>
