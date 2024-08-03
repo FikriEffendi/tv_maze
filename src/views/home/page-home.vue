@@ -1,5 +1,5 @@
 <template>
-  <div class="py-7">
+  <div class="">
     <section-search v-if="isSearch" />
     <template v-else>
       <section-running />

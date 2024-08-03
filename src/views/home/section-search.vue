@@ -1,33 +1,41 @@
 <template>
   <div>
-    <div class="grid grid-cols-1">
-      <router-link
-        :to="{ name: 'movieDetail', params: { id: movie.id } }"
-        v-for="movie in movies"
-        :key="movie.id"
-        class="my-2 bg-orange-100 rounded-md"
-      >
-        <movie-detail :movie="movie" />
-      </router-link>
+    <div class="grid grid-cols-1 gap-3">
+      <template v-for="movie in movies" :key="movie.id">
+        <movie-card :movie="movie" />
+      </template>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useApi } from "@/functions/api";
-import MovieDetail from "@/components/movie-detail.vue";
+import MovieCard from "@/components/movie-card.vue";
+import { useDebounceFn } from "@vueuse/core";
 
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const api = useApi();
 const route = useRoute();
 
+const debounceGetData = useDebounceFn(() => {
+  getData();
+}, 1000);
+
+const apiParams = computed(() => {
+  return {
+    q: route.query.search,
+  };
+});
+
+watch(apiParams, () => {
+  debounceGetData();
+});
+
 const movies = ref([]);
 const getData = async () => {
-  const response = await api.GET("search/shows", {
-    q: route.query.search,
-  });
+  const response = await api.GET("search/shows", apiParams.value);
   movies.value = response.map((item) => {
     return {
       id: item.show.id,
@@ -43,5 +51,5 @@ const getData = async () => {
   });
 };
 
-getData();
+debounceGetData();
 </script>
