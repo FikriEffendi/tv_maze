@@ -8,7 +8,7 @@
         <app-image
           :src="movie.image?.original"
           :alt="movie.name"
-          class="w-32 h-40 shadow-md r ounded-sm"
+          class="w-32 h-40 rounded-sm shadow-md"
         />
       </div>
       <div class="flex flex-col justify-between flex-1 p-3">
