@@ -10,6 +10,15 @@
     <div>
       <div>{{ movie.name }}</div>
       <div>{{ movie.premiered }}</div>
+      <div class="flex gap-2">
+        <div>
+          <app-image :src="imdbLogo" :alt="IMDb - logo" class="w-8 h-8" />
+        </div>
+        <div>{{ movie.rating }}/10</div>
+      </div>
+      <div>
+        {{ movie.summary }}
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +28,7 @@ import AppImage from "@/components/app-image.vue";
 import { useApi } from "@/functions/api";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import imdbLogo from "@/assets/imdb-logo.svg";
 
 const movie = ref([]);
 const api = useApi();
