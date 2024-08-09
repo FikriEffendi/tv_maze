@@ -42,10 +42,13 @@ const movie = ref([]);
 const api = useApi();
 const route = useRoute();
 const casts = ref([]);
+const crews = ref([]);
 
 const getData = async () => {
   const response = await api.GET(`shows/${route.params.id}`);
   const responseCast = await api.GET(`shows/${route.params.id}/cast`);
+  const responseCrew = await api.GET(`shows/${route.params.id}/crew`);
+  console.log(responseCrew);
   console.log(response);
   console.log(responseCast);
   movie.value = {
@@ -67,14 +70,27 @@ const getData = async () => {
       name: cast.person.name,
     };
   });
+
+  crews.value = responseCrew.map((crew) => {
+    return {
+      type: crew.type,
+      id: crew.person.id,
+      name: crew.person.name,
+    };
+  });
 };
 
 const starring = computed(() => {
   return casts.value
-    .filter((cast) => cast.id === 1 || cast.id === 2)
+    .slice(0, 2)
     .map((cast) => cast.name)
     .join(", ");
 });
+
+// const Directed = computed(() => {
+//   return casts.value
+//     .filter((director) => director.)
+// });
 
 getData();
 </script>
