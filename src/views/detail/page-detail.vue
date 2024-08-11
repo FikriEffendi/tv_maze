@@ -25,7 +25,7 @@
           {{ starring }}
         </span>
       </div>
-      <div>Directed By:{{}}</div>
+      <div>Directed By:{{ directed }}</div>
     </div>
   </div>
 </template>
@@ -87,9 +87,11 @@ const starring = computed(() => {
     .join(", ");
 });
 
-// const Directed = computed(() => {
-//   return casts.value
-//     .filter((director) => director.)
+// const directed = computed(() => {
+//   return crews.value
+//     .filter((director) => director.type === "Executive Producer")
+//     .slice(0, 1)
+//     .map((crew) => crew.person.name);
 // });
 
 getData();
