@@ -1,37 +1,33 @@
 <template>
   <div class="flex gap-9">
+    <section-image />
     <div>
-      <app-image
-        :src="movie.image?.original"
-        :alt="movie.name"
-        class="rounded-sm shadow-md h-72 w-52"
-      />
-    </div>
-    <div>
-      <div>{{ movie.name }}</div>
-      <div>{{ movie.premiered }}</div>
+      <div class="text-3xl font-bold">{{ movie.name }}</div>
+      <div class="my-2 font-medium">{{ movie.premiered }}</div>
       <div class="flex gap-2">
         <div>
           <app-image :src="imdbLogo" :alt="IMDb - logo" class="w-8 h-8" />
         </div>
-        <div>{{ movie.rating }}/10</div>
+        <div class="font-semibold">{{ movie.rating }}/10</div>
       </div>
-      <div>
-        <div>{{ stripHTML(movie.summary) }}</div>
+      <div class="my-4">
+        <div class="text-lg font-medium">{{ stripHTML(movie.summary) }}</div>
       </div>
-      <div>
-        Starring:
-        <span>
-          {{ starring }}
-        </span>
+      <div class="space-y-1">
+        <div class="font-semibold">
+          Starring:
+          <span>
+            {{ starring }}
+          </span>
+        </div>
+        <div class="font-semibold">Directed By:{{ directed }}</div>
       </div>
-      <div>Directed By:{{ directed }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import AppImage from "@/components/app-image.vue";
+import SectionImage from "./section-image.vue";
 import { useApi } from "@/functions/api";
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -87,12 +83,12 @@ const starring = computed(() => {
     .join(", ");
 });
 
-// const directed = computed(() => {
-//   return crews.value
-//     .filter((director) => director.type === "Executive Producer")
-//     .slice(0, 1)
-//     .map((crew) => crew.person.name);
-// });
+const directed = computed(() => {
+  const executiveProducer = crews.value.filter(
+    (crew) => crew.type === "Executive Producer"
+  );
+  return executiveProducer.length > 0 ? executiveProducer[0].name : "N/A";
+});
 
 getData();
 </script>
