@@ -21,12 +21,10 @@ if (route.query.search) {
 }
 
 watch(search, () => {
-  console.log(route.query);
   if (search.value) {
     router.replace({ query: { ...route.query, search: search.value } });
     return;
   }
-  console.log("test");
   router.replace({ query: { ...route.query, search: undefined } });
 });
 </script>
