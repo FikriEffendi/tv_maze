@@ -3,6 +3,7 @@
     <div v-for="cast in casts" :key="cast.id">
       <app-image class="w-24" :src="cast.image" :alt="cast.name" />
       <div>nama:{{ cast.name }}</div>
+      <div>character:{{ cast.characterName }}</div>
     </div>
   </div>
 </template>
@@ -25,8 +26,11 @@ const getData = async () => {
       id: cast.person.id,
       name: cast.person.name,
       image: cast.person.image.original,
+      characterId: cast.character.id,
+      characterName: cast.character.name,
     };
   });
+
   console.log(casts.value);
 };
 
