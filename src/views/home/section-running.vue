@@ -23,13 +23,15 @@ const getData = async () => {
   loading.value = true;
   try {
     const response = await api.GET("shows");
-    showMovies.value = response.map((movie) => {
-      return {
-        id: movie.id,
-        name: movie.name,
-        image: movie.image.original,
-      };
-    });
+    showMovies.value = response
+      .filter((movie) => movie.status === "Running")
+      .map((movie) => {
+        return {
+          id: movie.id,
+          name: movie.name,
+          image: movie.image.original,
+        };
+      });
   } finally {
     loading.value = false;
   }

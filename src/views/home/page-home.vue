@@ -2,7 +2,10 @@
   <div class="">
     <section-search v-if="isSearch" />
     <template v-else>
-      <section-running />
+      <div class="space-y-10">
+        <section-running />
+        <section-popular />
+      </div>
     </template>
   </div>
 </template>
@@ -12,6 +15,7 @@ import SectionSearch from "./section-search.vue";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import SectionRunning from "./section-running.vue";
+import SectionPopular from "./section-popular.vue";
 
 const route = useRoute();
 
