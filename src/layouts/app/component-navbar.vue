@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-x-0 bg-green-700">
+  <div class="fixed inset-x-0 z-30 bg-green-700">
     <div class="flex-1">
       <div class="flex items-center justify-between px-3 py-4">
         <div class="flex items-center gap-4">
