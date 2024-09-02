@@ -10,14 +10,20 @@
       <SwiperSlide v-for="movie in PopularShow.slice(0, 10)" :key="movie.id">
         <div class="flex gap-2">
           <div class="self-center text-3xl font-bold">1</div>
-          <div class="bg-black rounded-lg size-24"></div>
+          <div class="rounded-lg size-24">
+            <app-image :src="movie.image" :alt="movie.name" />
+          </div>
           <div>
             <div class="text-xs">PG-13</div>
             <div>{{ movie.name }}</div>
             <div class="flex items-baseline gap-1">
-              <div>Horor</div>
-              <div class="bg-black rounded-full size-1"></div>
-              <div>Fantasy</div>
+              <div v-for="(genre, index) in movie.genres" :key="index">
+                <div>{{ genre }}</div>
+                <div
+                  v-if="index < movie.genres.length - 1"
+                  class="bg-black rounded-full size-1"
+                ></div>
+              </div>
             </div>
             <div>{{ movie.rating }}</div>
           </div>
@@ -34,6 +40,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import AppImage from "@/components/app-image.vue";
 
 const modules = [Navigation];
 
@@ -54,7 +61,8 @@ const getData = async () => {
         rating: movie.rating.average,
         genres: movie.genres,
       };
-    });
+    })
+    .sort((a, b) => b.rating - a.rating);
 };
 
 getData();
