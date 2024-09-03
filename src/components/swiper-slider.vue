@@ -15,7 +15,9 @@
         v-for="runShow in showMovies.slice(0, 10)"
         :key="runShow.id"
       >
-        <app-image class="h-full" :src="runShow.image" :alt="runShow.name" />
+        <router-link :to="{ name: 'movieDetail', params: { id: runShow.id } }">
+          <app-image class="h-full" :src="runShow.image" :alt="runShow.name" />
+        </router-link>
       </swiper-slide>
 
       <swiper-slide>
@@ -38,6 +40,7 @@ import { Pagination, Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import AppImage from "@/components/app-image.vue";
+import { RouterLink } from "vue-router";
 
 const modules = [Pagination, Mousewheel];
 
