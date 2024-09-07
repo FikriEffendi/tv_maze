@@ -7,27 +7,39 @@
       :modules="modules"
       class="m-4"
     >
-      <SwiperSlide v-for="movie in PopularShow.slice(0, 10)" :key="movie.id">
-        <div class="flex gap-2">
-          <div class="self-center text-3xl font-bold">1</div>
-          <div class="rounded-lg size-24">
-            <app-image :src="movie.image" :alt="movie.name" />
-          </div>
-          <div>
+      <SwiperSlide
+        v-for="(movie, index) in PopularShow.slice(0, 10)"
+        :key="movie.id"
+      >
+        <router-link
+          class="flex gap-2"
+          :to="{ name: 'movieDetail', params: { id: movie.id } }"
+        >
+          <div class="self-center text-3xl font-bold">{{ index + 1 }}</div>
+          <app-image
+            class="rounded-lg size-24"
+            :src="movie.image"
+            :alt="movie.name"
+          />
+          <div class="">
             <div class="text-xs">PG-13</div>
             <div>{{ movie.name }}</div>
-            <div class="flex items-baseline gap-1">
-              <div v-for="(genre, index) in movie.genres" :key="index">
+            <div class="flex items-baseline gap-1 text-sm">
+              <template
+                v-for="(genre, index) in movie.genres.slice(0, 2)"
+                :key="index"
+              >
                 <div>{{ genre }}</div>
                 <div
                   v-if="index < movie.genres.length - 1"
                   class="bg-black rounded-full size-1"
                 ></div>
-              </div>
+              </template>
+              <div v-if="movie.genres.length > 2">...</div>
             </div>
             <div>{{ movie.rating }}</div>
           </div>
-        </div>
+        </router-link>
       </SwiperSlide>
     </Swiper>
   </div>
@@ -41,6 +53,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import AppImage from "@/components/app-image.vue";
+import { RouterLink } from "vue-router";
 
 const modules = [Navigation];
 

@@ -24,7 +24,7 @@ watch(search, () => {
   if (search.value) {
     router.replace({ query: { ...route.query, search: search.value } });
     return;
-  }
+  } //replace itu tidak kehitung history
   router.replace({ query: { ...route.query, search: undefined } });
 });
 </script>

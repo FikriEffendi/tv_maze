@@ -5,6 +5,7 @@
       <div class="space-y-10">
         <section-running />
         <section-popular />
+        <section-random />
       </div>
     </template>
   </div>
@@ -16,6 +17,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import SectionRunning from "./section-running.vue";
 import SectionPopular from "./section-popular.vue";
+import SectionRandom from "./section-random.vue";
 
 const route = useRoute();
 
