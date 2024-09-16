@@ -1,12 +1,14 @@
 <template>
   <div>
-    <template>
-      <div class="bg-slate-300">
+    <div class="bg-yellow-400 h-[40rem] items-center">
+      <div class="w-full h-[39rem] bg-slate-300">
         Halo
-        <div class="bg-red-200"></div>
-        <div class="bg-blue-200"></div>
+        <div class="flex h-[37rem] justify-center">
+          <div class="w-1/2 bg-red-200"></div>
+          <div class="w-1/2 bg-blue-200"></div>
+        </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
