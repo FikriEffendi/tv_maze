@@ -3,8 +3,8 @@
     <section-search v-if="isSearch" />
     <template v-else>
       <div class="space-y-10">
-        <section-running />
-        <section-popular />
+        <section-running class="container" />
+        <section-popular class="container" />
         <section-featured />
         <section-random />
       </div>

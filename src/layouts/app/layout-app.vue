@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-slate-200">
     <component-navbar />
     <component-sidebar />
-    <div class="container pt-24">
+    <div class="pt-24">
       <router-view />
     </div>
     <component-footer class="mt-10" />
