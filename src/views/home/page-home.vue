@@ -4,9 +4,9 @@
     <template v-else>
       <div class="space-y-10">
         <section-running class="container" />
-        <section-popular class="container shadow" />
+        <section-popular class="container" />
         <section-featured class="" />
-        <section-random class="container shadow" />
+        <section-random class="container" />
       </div>
     </template>
   </div>

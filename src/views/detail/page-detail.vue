@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-4">
+  <div class="container space-y-4">
     <section-description />
     <section-layout-other />
   </div>

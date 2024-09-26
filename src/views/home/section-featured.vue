@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative shadow-lg">
     <div class="brightness-50">
       <img
         class="w-full"
@@ -93,6 +93,7 @@ getData();
 
 <style scoped>
 /* Tambahkan gaya tambahan jika diperlukan */
+.shadow-lg {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
 </style>
-
-Saya sudah mengikuti kodingan dari anda kenapa
