@@ -5,12 +5,6 @@
       class="fixed top-0 left-0 w-64 min-h-screen shadow-md bg-slate-300 bg-opacity-80 bg-clip-padding blur-backdrop"
     >
       <div class="flex items-center justify-between p-4">
-        <span
-          class="p-2 cursor-pointer material-symbols-outlined"
-          @click="isShow.bool = !isShow.bool"
-        >
-          menu
-        </span>
         <router-link
           :to="{ name: 'home' }"
           class="p-2 text-lg transition-all hover:text-amber-800"
@@ -18,6 +12,12 @@
         >
           Logo
         </router-link>
+        <span
+          class="p-2 cursor-pointer material-symbols-outlined"
+          @click="isShow.bool = !isShow.bool"
+        >
+          menu
+        </span>
       </div>
       <div class="flex flex-col p-4">
         <router-link
@@ -31,7 +31,7 @@
         </router-link>
         <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
           Genre catalog
-        </router-link> -->
+        </router-link> -->y
       </div>
     </div>
   </div>
