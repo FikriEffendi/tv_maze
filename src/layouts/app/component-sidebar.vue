@@ -26,12 +26,12 @@
         >
           Home
         </router-link>
-        <!-- <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
+        <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
           People
         </router-link>
-        <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
+        <!-- <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
           Genre catalog
-        </router-link> -->y
+        </router-link> -->
       </div>
     </div>
   </div>

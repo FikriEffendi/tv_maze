@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-slate-200">
-    <component-navbar class="container" />
+    <component-navbar class="" />
     <component-sidebar />
     <div class="pt-24">
       <router-view />
