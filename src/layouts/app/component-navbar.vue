@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="fixed inset-x-0 z-30 bg-green-700">
     <div class="flex-1">
       <div class="container flex items-center justify-between px-3 py-4">
@@ -18,9 +18,39 @@
             Logo
           </router-link>
         </div>
-        <div class="">
+        <div class="sm:w-auto">
           <input-search />
         </div>
+      </div>
+    </div>
+  </div>
+</template> -->
+
+<template>
+  <div class="text-black bg-yellow-300">
+    <div class="container flex items-center justify-between py-4">
+      <div class="flex gap-2">
+        <div>
+          <span
+            class="cursor-pointer material-symbols-outlined"
+            @click="isShow.bool = !isShow.bool"
+            v-if="!isShow.bool"
+          >
+            menu
+          </span>
+        </div>
+        <div>
+          <router-link
+            :to="{ name: 'home' }"
+            class="text-lg transition-all hover:text-amber-800"
+            :class="{ 'sm:hidden': isShow.bool }"
+          >
+            Logo
+          </router-link>
+        </div>
+      </div>
+      <div class="w-10">
+        <input-search />
       </div>
     </div>
   </div>

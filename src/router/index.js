@@ -26,11 +26,11 @@ const router = createRouter({
           name: "movieDetail",
           component: MovieDetail,
         },
-        {
-          path: "/people",
-          name: "peopleDetail",
-          component: PeopleDetail,
-        },
+        // {
+        //   path: "/people",
+        //   name: "peopleDetail",
+        //   component: PeopleDetail,
+        // },
       ],
     },
     // {
