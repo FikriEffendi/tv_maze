@@ -19,32 +19,21 @@
           menu
         </span>
       </div>
-      <div class="flex flex-col p-4">
-        <router-link
-          :to="{ name: 'home' }"
-          class="p-2 transition-all rounded-md hover:bg-yellow-400"
-        >
-          Home
-        </router-link>
-        <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
-          People
-        </router-link>
-        <!-- <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
-          Genre catalog
-        </router-link> -->
+      <div class="flex flex-col p-4 testing">
+        <link-navbar />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useTemplateStore } from "@/stores/template";
+import LinkNavbar from "./link-navbar.vue";
 
 const isShow = useTemplateStore();
 </script>
 
-<style>
+<style lang="postcss" scoped>
 .blur-backdrop {
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);

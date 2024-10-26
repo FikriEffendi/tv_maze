@@ -1,7 +1,7 @@
 <template>
   <div>
     <swiper
-      :slidesPerView="5"
+      :slidesPerView="slidePerView"
       :spaceBetween="30"
       :mousewheel="true"
       :pagination="{
@@ -41,6 +41,22 @@ import "swiper/css";
 import "swiper/css/pagination";
 import AppImage from "@/components/app-image.vue";
 import { RouterLink } from "vue-router";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import { computed, ref, watch } from "vue";
+
+const breakpoints = useBreakpoints(breakpointsTailwind);
+
+const slidePerView = computed(() => {
+  if (breakpoints.isGreaterOrEqual("lg")) {
+    return 5;
+  }
+
+  if (breakpoints.isGreaterOrEqual("md")) {
+    return 2;
+  }
+
+  return 1;
+});
 
 const modules = [Pagination, Mousewheel];
 

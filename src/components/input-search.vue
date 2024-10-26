@@ -2,7 +2,7 @@
   <input
     type="text"
     placeholder="Cari Film"
-    class="p-2 border rounded-md"
+    class="w-full p-2 border rounded-md"
     v-model="search"
   />
 </template>
