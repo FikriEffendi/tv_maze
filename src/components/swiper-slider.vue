@@ -1,13 +1,15 @@
 <template>
   <div>
     <swiper
-      :slidesPerView="slidePerView"
+      :breakpoints="breakpoints"
       :spaceBetween="30"
       :mousewheel="true"
       :pagination="{
         clickable: true,
       }"
       :modules="modules"
+      :observer="true"
+      :observeParents="true"
       class="w-full h-96"
     >
       <swiper-slide
@@ -41,22 +43,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import AppImage from "@/components/app-image.vue";
 import { RouterLink } from "vue-router";
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
-import { computed, ref, watch } from "vue";
-
-const breakpoints = useBreakpoints(breakpointsTailwind);
-
-const slidePerView = computed(() => {
-  if (breakpoints.isGreaterOrEqual("lg")) {
-    return 5;
-  }
-
-  if (breakpoints.isGreaterOrEqual("md")) {
-    return 2;
-  }
-
-  return 1;
-});
+import { breakpointsTailwind } from "@vueuse/core";
 
 const modules = [Pagination, Mousewheel];
 
@@ -65,7 +52,35 @@ defineProps({
     type: Object,
     required: true,
   },
+  breakpoints: {
+    type: Object,
+    default: () => {
+      return {
+        //sm: 640px
+        [breakpointsTailwind.sm]: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
+        [breakpointsTailwind.md]: {
+          slidesPerView: 2,
+          spaceBetween: 15,
+        },
+        [breakpointsTailwind.lg]: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+        },
+      };
+    },
+  },
 });
 </script>
 
-<style></style>
+<style>
+.swiper-container {
+  transition: all 0.3s ease;
+}
+
+.swiper-slide {
+  transition: all 0.3s ease;
+}
+</style>

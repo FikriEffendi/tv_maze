@@ -1,18 +1,30 @@
 <template>
-  <div class="relative shadow-lg">
-    <div class="brightness-50">
+  <div class="relative overflow-hidden shadow-lg">
+    <div class="absolute inset-0 brightness-50">
       <img
-        class="w-full"
-        src="/assets/HBOs-The-Last-of-Us-Poster.avif"
-        alt="poster movie"
+        srcset="
+          /assets/HBOs-The-Last-of-Us-Poster.jpg     640w,
+          /assets/HBOs-The-Last-of-Us-Poster-lg.avif 800w
+        "
+        src="/assets/HBOs-The-Last-of-Us-Poster-lg.avif"
+        class="w-full h-auto"
+        alt="Elva dressed as a fairy"
       />
     </div>
-    <div class="absolute inset-0">
-      <div class="container flex h-full gap-8">
-        <div class="flex flex-col justify-center w-1/2 h-full gap-6">
-          <div class="my-3 space-y-3 text-white">
-            <div class="text-3xl font-bold">Featured in SaintStream</div>
-            <div class="text-lg">Best featured for you today</div>
+    <div class="relative">
+      <div class="my-3 space-y-3 text-white lg:hidden">
+        <div class="text-2xl font-bold lg:text-3xl">
+          Featured in SaintStream
+        </div>
+        <div class="lg:text-lg">Best featured for you today</div>
+      </div>
+      <div class="container flex flex-col h-full gap-8 lg:flex-row">
+        <div class="flex flex-col justify-center h-full gap-6 lg:w-1/2">
+          <div class="hidden my-3 space-y-3 text-white lg:block">
+            <div class="text-2xl font-bold lg:text-3xl">
+              Featured in SaintStream
+            </div>
+            <div class="lg:text-lg">Best featured for you today</div>
           </div>
           <div class="space-y-3 text-white">
             <div class="">#1 in Australia</div>
@@ -35,7 +47,9 @@
             <button class="btn-outline">Add Watchlist</button>
           </div>
         </div>
-        <div class="flex flex-col justify-center w-1/2">
+        <div
+          class="flex flex-col justify-center order-first lg:w-1/2 lg:order-last"
+        >
           <app-swiper class="w-full" slides-per-view="3">
             <swiper-slide v-for="movie in movies.slice(0, 10)" :key="movie.id">
               <div

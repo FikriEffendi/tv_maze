@@ -2,7 +2,7 @@
   <div>
     <div>Popular Show</div>
     <Swiper
-      :slides-per-view="4.5"
+      :breakpoints="breakpoints"
       :navigation="true"
       :modules="modules"
       class="m-4"
@@ -17,7 +17,7 @@
         >
           <div class="self-center text-3xl font-bold">{{ index + 1 }}</div>
           <app-image
-            class="rounded-lg size-24"
+            class="rounded-lg size-24 shrink-0"
             :src="movie.image"
             :alt="movie.name"
           />
@@ -54,6 +54,27 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import AppImage from "@/components/app-image.vue";
 import { RouterLink } from "vue-router";
+import { breakpointsTailwind } from "@vueuse/core";
+
+const breakpoints = ref({
+  //sm: 640px
+  [breakpointsTailwind.sm]: {
+    slidesPerView: 1.5,
+    spaceBetween: 10,
+  },
+  [breakpointsTailwind.md]: {
+    slidesPerView: 2.5,
+    spaceBetween: 15,
+  },
+  [breakpointsTailwind.lg]: {
+    slidesPerView: 3.5,
+    spaceBetween: 20,
+  },
+  [breakpointsTailwind.xl]: {
+    slidesPerView: 4.5,
+    spaceBetween: 25,
+  },
+});
 
 const modules = [Navigation];
 
