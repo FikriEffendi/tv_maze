@@ -1,23 +1,40 @@
 <template>
   <div class="relative overflow-hidden shadow-lg">
+    <!-- Backgroud Image Container -->
     <div class="absolute inset-0 brightness-50">
-      <img
-        srcset="
-          /assets/HBOs-The-Last-of-Us-Poster.jpg     640w,
-          /assets/HBOs-The-Last-of-Us-Poster-lg.avif 800w
-        "
-        src="/assets/HBOs-The-Last-of-Us-Poster-lg.avif"
-        class="w-full h-auto"
-        alt="Elva dressed as a fairy"
-      />
+      <picture class="">
+        <!-- For Small Screen -->
+        <source
+          media="(max-width: 767px)"
+          srcset="/public/assets/HBOs-The-Last-of-Us-Poster.jpg"
+        />
+        <!-- For medium and large screen -->
+        <source
+          media="(min-width: 768px)"
+          srcset="/public/assets/HBOs-The-Last-of-Us-Poster-lg.avif"
+        />
+        <!-- Fallback image -->
+        <img
+          src="/public/assets/HBOs-The-Last-of-Us-Poster-lg.avif"
+          class="w-full h-auto"
+          alt="The Last Of Us Background"
+        />
+      </picture>
     </div>
+
+    <!-- Content Container -->
     <div class="relative">
-      <div class="my-3 space-y-3 text-white lg:hidden">
-        <div class="text-2xl font-bold lg:text-3xl">
-          Featured in SaintStream
+      <!-- Mobile/Tablet Header -->
+      <div class="container px-4 py-5 text-white lg:hidden">
+        <div class="space-y-3">
+          <div class="text-2xl font-bold md:text-3xl">
+            Featured in SaintStream
+          </div>
+          <div class="md:text-lg">Best featured for you today</div>
         </div>
-        <div class="lg:text-lg">Best featured for you today</div>
       </div>
+
+      <!-- Main Content -->
       <div class="container flex flex-col h-full gap-8 lg:flex-row">
         <div class="flex flex-col justify-center h-full gap-6 lg:w-1/2">
           <div class="hidden my-3 space-y-3 text-white lg:block">
