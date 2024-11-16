@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-5">
     <div>Random Movies</div>
-    <div class="grid grid-cols-4 gap-y-12">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-y-12">
       <template v-for="movie in randMov.slice(0, 12)">
         <router-link
           :to="{ name: 'movieDetail', params: { id: movie.id } }"
