@@ -2,21 +2,21 @@
   <div class="relative overflow-hidden shadow-lg">
     <!-- Backgroud Image Container -->
     <div class="absolute inset-0 brightness-50">
-      <picture class="">
-        <!-- For Small Screen -->
+      <picture class="w-full h-full">
+        <!-- For Small and Medium Screen -->
         <source
-          media="(max-width: 767px)"
+          media="(max-width: 1023px)"
           srcset="/public/assets/HBOs-The-Last-of-Us-Poster.jpg"
         />
-        <!-- For medium and large screen -->
+        <!-- For large screen -->
         <source
-          media="(min-width: 768px)"
+          media="(min-width: 1024px)"
           srcset="/public/assets/HBOs-The-Last-of-Us-Poster-lg.avif"
         />
         <!-- Fallback image -->
         <img
           src="/public/assets/HBOs-The-Last-of-Us-Poster-lg.avif"
-          class="w-full h-auto"
+          class="object-cover w-full h-full"
           alt="The Last Of Us Background"
         />
       </picture>
