@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>Popular Show</div>
+    <div class="text-xl font-semibold text-gray-800">Popular Show</div>
     <Swiper
       :breakpoints="breakpoints"
       :navigation="true"

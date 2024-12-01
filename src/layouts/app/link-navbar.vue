@@ -7,9 +7,9 @@
   </router-link>
   <router-link
     :class="typeLink === 'sidebar' ? 'sidebar-link' : 'navbar-link'"
-    :to="{ name: 'pageRunning' }"
+    :to="{ name: 'pageAi' }"
   >
-    People
+    Ai Recommendation
   </router-link>
   <!-- <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
           Genre catalog

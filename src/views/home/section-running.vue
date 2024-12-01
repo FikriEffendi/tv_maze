@@ -1,6 +1,6 @@
 <template>
   <div id="section-running">
-    <div>Running Show</div>
+    <div class="text-xl font-semibold text-gray-800">Running Show</div>
     <div v-if="loading">
       <div>loading...</div>
     </div>

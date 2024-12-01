@@ -1,22 +1,28 @@
 <template>
   <div class="space-y-5">
-    <div>Random Movies</div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-y-12">
-      <template v-for="movie in randMov.slice(0, 12)">
+    <div class="text-xl font-semibold text-gray-800">Random Movies</div>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8"
+    >
+      <template v-for="movie in randMov.slice(0, 12)" :key="movie.id">
         <router-link
           :to="{ name: 'movieDetail', params: { id: movie.id } }"
-          class="space-y-1"
+          class="space-y-3"
         >
-          <div>
+          <div class="overflow-hidden rounded-md shadow-lg">
             <app-image
-              class="w-64 h-40 bg-cover rounded-md"
+              class="object-cover w-full aspect-video"
               :src="movie.image"
               :alt="movie.name"
             />
           </div>
-          <div class="space-y-2">
-            <div class="text-2xl font-bold">Judul</div>
-            <div class="text-sm">Deskripsi</div>
+          <div class="space-y-1">
+            <div class="text-lg font-bold text-gray-900 truncate">
+              {{ movie.name }}
+            </div>
+            <div class="text-sm text-gray-600 line-clamp-2">
+              {{ movie.genre.join(", " || "No Genre Available") }}
+            </div>
           </div>
         </router-link>
       </template>
