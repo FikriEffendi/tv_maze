@@ -49,6 +49,8 @@
 
 <script setup>
 import { ref } from "vue";
+import * as tf from '@tensorflow/tfjs'
+import axios from "axios";
 
 const dynamicFields = ref([
   {
@@ -138,6 +140,37 @@ const createFeatureExtractor = (userPreferences) => {
     return features;
   };
 };
+
+const preprocessUserPreferences = () => ({
+  genres: dynamicFields.value[0].value.split(',').map((g) => g.trim()),
+  type: dynamicFields.value[1].value,
+  rating: dynamicFields.value[2].value,
+  status: dynamicFields.value[3].value,
+  synopsis: dynamicFields.value[4].value
+})
+
+//TensorFlow.js Cosine Similarity
+const cosineSimilarity = (a, b) => {
+  const tensorA = tf.tensor1d(a)
+  const tensorB = tf.tensor1d(b)
+
+  const dotProduct = tf.sum(tf.mul(tensorA, tensorB))
+  const magnitudeA = tf.norm(tensorA)
+  const magnitudeB = tf.norm(tensorB)
+
+  return dotProduct.div(magnitudeA.mul(magnitudeB)).arraySync()
+}
+
+const recommendShows = async () => {
+  try {
+    //Fetch shows
+    const response = await axios.get('https://api.tvmaze.com/shows')
+    const shows = response.data
+
+    //Preprocess user preferences
+
+  }
+}
 
 const recommendShows = () => {};
 </script>
