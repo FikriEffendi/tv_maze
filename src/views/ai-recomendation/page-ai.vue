@@ -12,7 +12,7 @@
         <input
           v-model="field.value"
           :type="field.type"
-          class="block w-full px-2 mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50"
+          class="input-field"
           :placeholder="field.placeholder"
         />
       </div>
@@ -35,11 +35,15 @@
           <img
             :src="show.image?.medium || 'https://via.placeholder.com/300x450'"
             :alt="show.name"
+            class="object-cover w-full h-64"
           />
-          <div class="text-sm text-gray-600">
-            <p>Genres: {{ show.genres.join(", ") }}</p>
-            <p>Rating: {{ show.rating?.average || "N/A" }}</p>
-            <p>Status: {{ show.status }}</p>
+          <div class="p-4">
+            <div class="mb-2 text-xl font-semibold">{{ show.name }}</div>
+            <div class="text-sm text-gray-600">
+              <p>Genre: {{ show.genres.join(", ") }}</p>
+              <p>Rating: {{ show.rating?.average || "N/A" }}</p>
+              <p>Status: {{ show.status }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -49,15 +53,15 @@
 
 <script setup>
 import { ref } from "vue";
-import * as tf from '@tensorflow/tfjs'
+import * as tf from "@tensorflow/tfjs";
 import axios from "axios";
 
 const dynamicFields = ref([
   {
-    label: "Prefered Genres",
+    label: "Preferred Genres",
     value: "",
     type: "text",
-    placeholder: "Enter Genre (coma-separated)",
+    placeholder: "Enter Genre (comma-separated)",
   },
   {
     label: "Show Type",
@@ -68,7 +72,7 @@ const dynamicFields = ref([
   {
     label: "Minimum Rating",
     value: "",
-    type: "text",
+    type: "number",
     placeholder: "Enter minimum rating",
   },
   {
@@ -81,7 +85,7 @@ const dynamicFields = ref([
     label: "Synopsis Keywords",
     value: "",
     type: "text",
-    placeholder: "Enter keyword describing your preferred story",
+    placeholder: "Enter keywords describing your preferred story",
   },
 ]);
 
@@ -93,10 +97,10 @@ const createFeatureExtractor = (userPreferences) => {
 
     //Genre Matching
     const genreMatch =
-      userPreferences.genre.length > 0
+      userPreferences.genres.length > 0
         ? userPreferences.genres.some((genre) => {
-            show.genres.some((showGenre) => {
-              showGenre.toLowerCase().includes(genre.toLowerCase());
+            return show.genres.some((showGenre) => {
+              return showGenre.toLowerCase().includes(genre.toLowerCase());
             });
           })
         : false;
@@ -122,7 +126,7 @@ const createFeatureExtractor = (userPreferences) => {
           .toLowerCase()
           .split(",")
           .some((keyword) => {
-            show.summary?.toLowerCase().includes(keyword.trim());
+            return show.summary?.toLowerCase().includes(keyword.trim());
           })
       : false;
 
@@ -142,37 +146,61 @@ const createFeatureExtractor = (userPreferences) => {
 };
 
 const preprocessUserPreferences = () => ({
-  genres: dynamicFields.value[0].value.split(',').map((g) => g.trim()),
+  genres: dynamicFields.value[0].value.split(",").map((g) => g.trim()),
   type: dynamicFields.value[1].value,
   rating: dynamicFields.value[2].value,
   status: dynamicFields.value[3].value,
-  synopsis: dynamicFields.value[4].value
-})
+  synopsis: dynamicFields.value[4].value,
+});
 
 //TensorFlow.js Cosine Similarity
 const cosineSimilarity = (a, b) => {
-  const tensorA = tf.tensor1d(a)
-  const tensorB = tf.tensor1d(b)
+  const tensorA = tf.tensor1d(a);
+  const tensorB = tf.tensor1d(b);
 
-  const dotProduct = tf.sum(tf.mul(tensorA, tensorB))
-  const magnitudeA = tf.norm(tensorA)
-  const magnitudeB = tf.norm(tensorB)
+  const dotProduct = tf.sum(tf.mul(tensorA, tensorB));
+  const magnitudeA = tf.norm(tensorA);
+  const magnitudeB = tf.norm(tensorB);
 
-  return dotProduct.div(magnitudeA.mul(magnitudeB)).arraySync()
-}
+  return dotProduct.div(magnitudeA.mul(magnitudeB)).arraySync();
+};
 
 const recommendShows = async () => {
   try {
     //Fetch shows
-    const response = await axios.get('https://api.tvmaze.com/shows')
-    const shows = response.data
+    const response = await axios.get("https://api.tvmaze.com/shows");
+    const shows = response.data;
 
     //Preprocess user preferences
+    const userPreferences = preprocessUserPreferences();
 
+    //Create feature extractor
+    const extractFeatures = createFeatureExtractor(userPreferences);
+
+    //Extract features for all shows
+    const showFeatures = shows.map(extractFeatures);
+
+    //Create a reference preference vector
+    const referencePreference = [1.0, 1.0, 1.0, 1.0, 1.0, 7.0, 60.0];
+
+    const similarities = showFeatures.map((features, index) => ({
+      show: shows[index],
+      similarity: cosineSimilarity(features, referencePreference),
+    }));
+
+    //Sort and select top recommendations
+    recommendations.value = similarities
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 6)
+      .map((item) => item.show);
+  } catch (error) {
+    console.log("Recommendation Error: ", error);
   }
-}
-
-const recommendShows = () => {};
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="postcss" scoped>
+.input-field {
+  @apply block w-full px-2 mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50;
+}
+</style>
