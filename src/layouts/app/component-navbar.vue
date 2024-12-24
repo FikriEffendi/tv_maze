@@ -13,7 +13,7 @@
           <div class="flex items-center space-x-4">
             <router-link
               :to="{ name: 'home' }"
-              class="text-lg transition-all hover:text-amber-800"
+              class="text-lg transition-all hover:text-white"
               :class="{ 'sm:hidden': isShow.bool }"
             >
               Logo

@@ -4,6 +4,7 @@ import LayoutApp from "@/layouts/app/layout-app.vue";
 import PageRunning from "@/views/running/page-running.vue";
 import MovieDetail from "@/views/detail/page-detail.vue";
 import PageAi from "@/views/ai-recomendation/page-ai.vue";
+import PageGenre from "@/views/genre/page-genre.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
           path: "/movie/:id",
           name: "movieDetail",
           component: MovieDetail,
+        },
+        {
+          path: "/genre",
+          name: "pageGenre",
+          component: PageGenre,
         },
         // {
         //   path: "/people",
