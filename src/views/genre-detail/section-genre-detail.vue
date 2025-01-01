@@ -4,6 +4,10 @@
     <template v-for="movie in movieGenreList" :key="movie.id">
       <movie-card :movie="movie"></movie-card>
     </template>
+    <!-- Jika tidak ada -->
+    <div v-if="movieGenreList.length === 0" class="mt-4 text-gray-500">
+      No shows available for this genre.
+    </div>
   </div>
 </template>
 
@@ -19,27 +23,32 @@ const api = useApi();
 const movieGenreList = ref([]);
 
 const getData = async () => {
-  const response = await api.GET("shows");
+  try {
+    const response = await api.GET("shows");
 
-  response.forEach((movie) => {
-    movie.some(route.params.name);
-  });
+    // Memfilter data berdasarkan genre yang sesuai dengan route.params.name
+    movieGenreList.value = response
+      .filter((movie) => {
+        return movie.genres.includes(route.params.name);
+      })
+      .map((movie) => {
+        return {
+          id: movie.id,
+          image: movie.image,
+          name: movie.name,
+          genres: movie.genres,
+          language: movie.language,
+          summary: movie.summary,
+          status: movie.status,
+          rating: movie.rating,
+          type: movie.type,
+        };
+      });
 
-  movieGenreList.value = response.map((movie) => {
-    return {
-      id: movie.id,
-      image: movie.image.original,
-      name: movie.name,
-      genres: movie.genres,
-      language: movie.language,
-      summary: movie.summary,
-      status: movie.status,
-      rating: movie.rating,
-      type: movie.type,
-    };
-  });
-
-  console.log(movieGenreList.value);
+    console.log(movieGenreList.value);
+  } catch (error) {
+    console.log("Error fetching data:", error);
+  }
 };
 
 getData();
