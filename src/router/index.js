@@ -6,6 +6,7 @@ import MovieDetail from "@/views/detail/page-detail.vue";
 import PageAi from "@/views/ai-recomendation/page-ai.vue";
 import PageGenre from "@/views/genre/page-genre.vue";
 import PageGenreDetail from "@/views/genre-detail/page-genre-detail.vue";
+import PagePerson from "@/views/person/page-person.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,11 @@ const router = createRouter({
           path: "/genre/:name",
           name: "pageGenreDetail",
           component: PageGenreDetail,
+        },
+        {
+          path: "/person",
+          name: "pagePerson",
+          component: PagePerson,
         },
         // {
         //   path: "/people",

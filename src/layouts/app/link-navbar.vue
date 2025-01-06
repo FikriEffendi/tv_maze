@@ -15,11 +15,14 @@
     :class="typeLink === 'sidebar' ? 'sidebar-link' : 'navbar-link'"
     :to="{ name: 'pageGenre' }"
   >
-    Genre
+    Genre Catalog
   </router-link>
-  <!-- <router-link class="p-2 transition-all rounded-md hover:bg-yellow-400">
-          Genre catalog
-        </router-link> -->
+  <router-link
+    :class="typeLink === 'sidebar' ? 'sidebar-link' : 'navbar-link'"
+    :to="{ name: 'pagePerson' }"
+  >
+    Person
+  </router-link>
 </template>
 
 <script setup>
