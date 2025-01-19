@@ -2,15 +2,19 @@
   <div class="py-4">
     <div class="my-4 text-2xl font-bold text-center">List Of People</div>
     <div class="flex px-2 gap-2">
-      <div class="flex-1 space-y-2">
+      <div class="basis-4/5 space-y-2">
         <template v-for="(group, letter) in groupedPeople" :key="letter">
           <div>
             <!-- Menampilkan huruf abjad -->
-            <div class="p-2 font-bold text-center uppercase bg-green-100 rounded shadow">
+            <div
+              ref="alphabetRefs"
+              :data-letter="letter"
+              class="p-2 font-bold text-center uppercase bg-green-100 rounded shadow"
+            >
               {{ letter }}
             </div>
 
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-4 gap-4 my-2">
               <!-- Menampilkan daftar orang berdasarkan huruf abjad -->
               <template v-for="person in group" :key="person.id">
                 <div>
@@ -28,10 +32,17 @@
           </div>
         </template>
       </div>
-      <div class="h-full basis-1/5 bg-zinc-500 rounded">
+      <div class="rounded bg-green-100 fixed right-2 w-1/6">
         <div class="grid grid-cols-5 place-items-center py-2">
           <template v-for="letter in letters" :key="letter">
-            <div class="text-xl font-bold">{{ letter }}</div>
+            <div
+              :class="{
+                'text-blue-500': letter === activeLetter,
+              }"
+              class="text-xl font-bold"
+            >
+              {{ letter }}
+            </div>
           </template>
         </div>
       </div>
@@ -107,9 +118,41 @@ const groupedPeople = computed(() => {
   return groups;
 });
 
+//State untuk huruf aktif
+const activeLetter = ref("A");
+
+//Refs untuk setiap grup
+const groupRefs = ref([]);
+
+//Fungsi untuk mengatur Intersection Observer
+const observeGroups = () => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activeLetter.value = entry.target.dataset.letter;
+        }
+      });
+    },
+    {
+      rootMargin: "0px 0px -80% 0px",
+      threshold: 0.1,
+    }
+  );
+
+  //Observe setiap grup
+  groupRefs.value.forEach((group) => {
+    observer.observe(group);
+  });
+};
+
 //Memanggil fungsi `getData` saat komponen dipasang
 onMounted(() => {
-  getData();
+  getData().then(() => {
+    //Tambahkan refs ke elemen grup
+    groupRefs.value = document.querySelectorAll("[data-letter]");
+    observeGroups();
+  });
 });
 </script>
 
