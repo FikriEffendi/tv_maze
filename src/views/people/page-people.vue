@@ -128,15 +128,21 @@ const groupRefs = ref([]);
 const observeGroups = () => {
   const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeLetter.value = entry.target.dataset.letter;
+      let visibleSections = entries.filter((entry) => entry.isIntersecting);
+
+      if (visibleSections.length > 0) {
+        let firstVisibleLetter = visibleSections[0].target.dataset.letter;
+
+        //update activeLetter hanya jika berbeda
+        if (firstVisibleLetter.length > 0) {
+          activeLetter.value = firstVisibleLetter;
         }
-      });
+      }
     },
     {
-      rootMargin: "0px 0px -80% 0px",
-      threshold: 0.1,
+      root: null,
+      rootMargin: "-20% 0px -70% 0px",
+      threshold: [0.1, 0.5, 0.8],
     }
   );
 
@@ -146,13 +152,55 @@ const observeGroups = () => {
   });
 };
 
+//Fungsi untuk menangani perubahan scroll manual
+const handleScroll = () => {
+  let foundLetter = activeLetter.value; //Menggunakan nilai saat ini sebagai default
+  let closestElement = null;
+  let closestDistance = Infinity;
+
+  for (const group of groupRefs.value) {
+    const rect = group.getBoundingClientRect();
+
+    //Cari element yang paling dekat ke atas viewport
+    let distance = Math.abs(rect.top);
+    if (distance < closestDistance && rect.top <= window.innerHeight / 3) {
+      closestDistance = distance;
+      closestElement = group;
+    }
+  }
+
+  if (closestElement) {
+    foundLetter = closestElement.dataset.letter;
+  } else {
+    //Jika tidak ada element lain yang terlihat, reset ke 'A'
+    const firstGroup = groupRefs.value[0];
+    if (firstGroup && firstGroup.getBoundingClientRect().top > 0) {
+      foundLetter = "A";
+    }
+  }
+
+  //Hanya ubah jika berbeda dari sebelumnya
+  if (foundLetter !== activeLetter.value) {
+    activeLetter.value = foundLetter;
+  }
+};
+
+//fungsi debounce agar scroll tidak terlalu cepat mengubah nilai
+let scrollTimeout;
+const debouncedScroll = () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(handleScroll, 50);
+};
+
 //Memanggil fungsi `getData` saat komponen dipasang
-onMounted(() => {
-  getData().then(() => {
-    //Tambahkan refs ke elemen grup
-    groupRefs.value = document.querySelectorAll("[data-letter]");
-    observeGroups();
-  });
+onMounted(async () => {
+  await getData();
+
+  //Tambahkan refs ke elemen grup
+  groupRefs.value = document.querySelectorAll("[data-letter]");
+  observeGroups();
+
+  window.addEventListener("scroll", debouncedScroll);
 });
 </script>
 
