@@ -18,13 +18,19 @@
               <!-- Menampilkan daftar orang berdasarkan huruf abjad -->
               <template v-for="person in group" :key="person.id">
                 <div>
-                  <app-image
-                    v-if="person.image && person.image.original"
-                    :src="person.image.original"
-                    :alt="person.name"
-                  />
-                  <div v-else class="p-2 text-center text-red-500 bg-red-100">
-                    No Image Available
+                  <div v-if="person.image && person.image.original" class="h-full">
+                    <app-image
+                      :src="person.image.original"
+                      :alt="person.name"
+                      class="aspect-[3/4]"
+                    />
+                    <div>{{ person.name }}</div>
+                  </div>
+                  <div v-else class="text-center flex items-center justify-center">
+                    <div class="text-red-500 bg-red-100 aspect-[3/4]">
+                      No Image Available
+                    </div>
+                    <div>{{ person.name }}</div>
                   </div>
                 </div>
               </template>

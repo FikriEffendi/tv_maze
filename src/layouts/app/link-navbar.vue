@@ -17,12 +17,12 @@
   >
     Genre Catalog
   </router-link>
-  <router-link
+  <!-- <router-link
     :class="typeLink === 'sidebar' ? 'sidebar-link' : 'navbar-link'"
     :to="{ name: 'pagePerson' }"
   >
     Person
-  </router-link>
+  </router-link> -->
 </template>
 
 <script setup>
